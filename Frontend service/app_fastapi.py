@@ -39,17 +39,15 @@ def get_rag_response(paragraphs):
 def format_tool_output(paragraphs, response_scoring):
     output = ""
     for para, resp in zip(paragraphs, response_scoring.json()['predictions'][0]['values'][0]):
-        output += f"{'='*82}\n\n"
-        output += 'NDA Clause:\n----------------\n'
-        output += para + '\n\n'
+        output += f"<div padding: 5px;'>\n"
+        output += '<b>NDA Clause:</b><br>\n'
+        output += para.replace("\n", "<br>") + '<br><br>\n'
         formatted_resp = re.sub(r'\*\* (?!(\\n))', '** \n', resp)
-        output += (formatted_resp.replace("**\n\n", "\n")
-                       .replace("** \n\n", " \n")
-                       .replace("**\n", "\n")
-                       .replace("** \n", "\n")
-                       .replace("**1. Compliance Issues:", "Compliance Issues:\n-------------------------")
-                       .replace("**2. Corrections:", "Corrections:\n----------------") + '\n\n')
-        output += f"{'='*82}\n"
+        formatted_resp = (formatted_resp.replace("**1. Compliance Issues:**", "<b>Compliance Issues:</b><span style='background-color: lightcoral;'>")
+                                          .replace("**2. Corrections:**", "</span><br><b>Corrections:</b><span style='background-color: lightgreen;'>"))
+        output += formatted_resp.replace("\n", "<br>").replace("<br><br>", "<br>")
+        output += f"</span><hr style='border: 1px solid #000;'>"
+        output += "</div><br><br>"
     return output
     
 def extract_text(pdf_path=None, text=None):
@@ -61,7 +59,7 @@ def extract_text(pdf_path=None, text=None):
                 if text:
                     # Use regex to split paragraphs by numbering pattern
                     split_paragraphs = re.split(r'(\d+\.\s)', text)
-                    
+
                     # Combine split parts correctly
                     current_paragraph = ""
                     for i, part in enumerate(split_paragraphs):
@@ -89,10 +87,10 @@ io = gr.Interface(
     title="NDA Sanity Check",
     description="Verify you NDA against predefined standards in a matter of seconds!",
     inputs=[gr.File(label="Upload PDF with NDA"),
-            gr.Textbox(label="Enter NDA text",
+            gr.Textbox(label="Enter NDA fragment",
                        lines=10,
                        placeholder="Enter text here...")],
-    outputs=gr.Textbox(label="Compliance Issues"),
+    outputs=gr.HTML(value="<span style='display:block;text-align:center;color:gray;'>Analysis of compliance issues will be displayed here, clause-by-clause.</span>"),
     live=False,
     allow_flagging="never"
     )
