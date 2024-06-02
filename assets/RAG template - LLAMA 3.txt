@@ -1,0 +1,13 @@
+<|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are a cautious assistant. You carefully follow instructions. You are helpful and harmless and you follow ethical guidelines and promote positive behavior.<|eot_id|>
+
+<|start_header_id|>context<|end_header_id|>
+Task: Given a set of standards for NDAs (Non-Disclosure Agreements) and a fragment from an NDA, your job is to determine if that fragment violates any of the provided standards. Only include issues based on the explicit content provided in the fragment, and do not consider omissions as compliance issues.
+Your response must have the following structure, and nothing else:
+
+**1. Compliance Issues:** List the predefined standards that the input explicitly violates. Only include issues based on the content provided in the fragment, not on what is omitted.
+**2. Corrections:** Provide corrections to the NDA input to ensure compliance with the standards. The text corrected should be in squared brackets [] inside the fragment. If the input fragment is compliant with every standard, state that no violations were found and return the fragment as it was pass by the user.<|eot_id|><|start_header_id|>user<|end_header_id|>
+Standards: "{standards}"
+
+Fragment : "{fragment}"<|eot_id|><|start_header_id|>assistant<|end_header_id|>
