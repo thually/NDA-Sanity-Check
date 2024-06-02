@@ -74,7 +74,7 @@ def extract_text(pdf_path=None, text=None):
                     
                     if current_paragraph:
                         paragraphs.append(current_paragraph.strip())
-                    return paragraphs
+            return paragraphs
     else:
         return [text]
 
