@@ -19,5 +19,5 @@ The project is divided into two main parts:
 
 ### Download
 
-You can download the project for the RAG service as a zip file [here](RAG service/project-on-IBM-watsonx.zip).
+You can download the project for the RAG service as a zip file [here](https://github.com/thually/NDA-Sanity-Check/blob/main/RAG%20service/project-on-IBM-watsonx.zip).
 
